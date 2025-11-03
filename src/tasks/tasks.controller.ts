@@ -13,6 +13,8 @@ import { Task } from './entities/task.entity';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { ActiveUser } from 'src/iam/authentication/decorators/active-user.decorator';
+import { ActiveUserData } from 'src/iam/authentication/interfaces/active-user-data.interface';
 
 @ApiTags('Tasks')
 @Controller('tasks')
@@ -20,7 +22,7 @@ export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
   @Get()
-  getAll(): Promise<Task[]> {
+  getAll(@ActiveUser() user: ActiveUserData): Promise<Task[]> {
     return this.tasksService.getAllTasks();
   }
 
