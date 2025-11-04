@@ -15,14 +15,17 @@ import { UpdateTaskDto } from './dto/update-task.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { ActiveUser } from 'src/iam/authentication/decorators/active-user.decorator';
 import { ActiveUserData } from 'src/iam/authentication/interfaces/active-user-data.interface';
+import { Roles } from 'src/iam/authorization/decorators/roles.decorator';
+import { Role } from 'src/users/enums/role.enum';
 
 @ApiTags('Tasks')
 @Controller('tasks')
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
+  @Roles(Role.ADMIN)
   @Get()
-  getAll(@ActiveUser() user: ActiveUserData): Promise<Task[]> {
+  getAll(): Promise<Task[]> {
     return this.tasksService.getAllTasks();
   }
 
