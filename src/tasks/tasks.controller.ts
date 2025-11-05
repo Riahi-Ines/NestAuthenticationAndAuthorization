@@ -17,6 +17,8 @@ import { Roles } from 'src/iam/authorization/decorators/roles.decorator';
 import { Role } from 'src/users/enums/role.enum';
 import { Permission } from 'src/iam/authorization/permission.type';
 import { Permissions } from 'src/iam/authorization/decorators/permissions.decorator';
+import { Policies } from 'src/iam/authorization/decorators/policies.decrator';
+import { FrameworkContributorPolicy } from 'src/iam/authorization/policies/framework-contributor.policy';
 
 @ApiTags('Tasks')
 @Controller('tasks')
@@ -24,7 +26,7 @@ export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
   //@Roles(Role.ADMIN)
-  @Permissions(Permission.CreateTask)
+  @Policies(new FrameworkContributorPolicy())
   @Get()
   getAll(): Promise<Task[]> {
     return this.tasksService.getAllTasks();
@@ -35,6 +37,7 @@ export class TasksController {
     return this.tasksService.getTaskById(id);
   }
 
+  //@Permissions(Permission.CreateTask)
   @Post()
   create(@Body() dto: CreateTaskDto): Promise<Task> {
     return this.tasksService.createTask(dto);

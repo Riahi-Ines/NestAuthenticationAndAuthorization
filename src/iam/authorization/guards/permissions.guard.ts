@@ -1,8 +1,8 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
-import { PermissionType } from '../../permission.type';
-import { PERMISSIONS_KEY } from '../../decorators/permissions.decorator';
+import { PermissionType } from '../permission.type';
+import { PERMISSIONS_KEY } from '../decorators/permissions.decorator';
 import { ActiveUserData } from 'src/iam/authentication/interfaces/active-user-data.interface';
 import { REQUEST_USER_KEY } from 'src/iam/iam.constants';
 
