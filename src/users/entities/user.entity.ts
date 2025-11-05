@@ -1,10 +1,16 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Role } from '../enums/role.enum';
 import {
   Permission,
   PermissionType,
 } from 'src/iam/authorization/permission.type';
-import { json } from 'stream/consumers';
+import { ApiKey } from '../api-keys/entities/api-key.entity/api-key.entity';
 
 @Entity()
 export class User {
@@ -19,6 +25,10 @@ export class User {
 
   @Column({ enum: Role, default: Role.USER })
   role: Role;
+
+  @JoinTable()
+  @OneToMany(() => ApiKey, (apiKey) => apiKey.user)
+  apiKeys: ApiKey[];
 
   @Column({ enum: Permission, default: [], type: 'json' })
   permissions: PermissionType[];
