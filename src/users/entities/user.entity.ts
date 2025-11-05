@@ -20,11 +20,20 @@ export class User {
   @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({ nullable: true })
   password: string;
 
   @Column({ enum: Role, default: Role.USER })
   role: Role;
+
+  @Column({ default: false })
+  isTfaEnabled: boolean;
+
+  @Column({ nullable: true })
+  tfaSecret: string;
+
+  @Column({ nullable: true })
+  googleId: string;
 
   @JoinTable()
   @OneToMany(() => ApiKey, (apiKey) => apiKey.user)
